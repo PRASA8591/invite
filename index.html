@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bathiya & Harshi - Wedding Invitation</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Lato', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            light: '#f4f1ea', // Warm paper color
+                            dark: '#2c4c3b',  // Elegant forest green
+                            accent: '#d4af37' // Soft gold
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Smooth scrolling and compact scrollbar */
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f4f1ea; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Subtle background pattern */
+        body {
+            background-color: #f4f1ea;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e5e0d8' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="text-stone-800 font-sans antialiased">
+
+    <div class="max-w-md mx-auto sm:max-w-2xl lg:max-w-3xl bg-white min-h-screen shadow-2xl overflow-hidden relative">
+
+        <header class="bg-brand-dark text-white text-center py-20 px-6 relative rounded-b-3xl shadow-lg">
+            <div class="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay rounded-b-3xl"></div>
+            
+            <div class="relative z-10">
+                <p class="text-sm uppercase tracking-widest mb-4 text-brand-accent font-semibold">We are getting married</p>
+                <h1 class="font-serif text-5xl md:text-7xl font-bold leading-tight mb-6 tracking-wide drop-shadow-md">
+                    Bathiya<br>
+                    <span class="text-3xl md:text-5xl italic font-normal">&amp;</span><br>
+                    Harshi
+                </h1>
+                <p class="text-lg md:text-xl font-light tracking-wider mt-4">November 27, 2026</p>
+            </div>
+        </header>
+
+        <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-stone-200">
+            <ul class="flex justify-center space-x-6 py-4 text-sm font-semibold text-brand-dark uppercase tracking-wider overflow-x-auto px-4">
+                <li><a href="#story" class="hover:text-brand-accent transition">Story</a></li>
+                <li><a href="#program" class="hover:text-brand-accent transition">Program</a></li>
+                <li><a href="#venue" class="hover:text-brand-accent transition">Venue</a></li>
+                <li><a href="#rsvp" class="hover:text-brand-accent transition">RSVP</a></li>
+            </ul>
+        </nav>
+
+        <main class="px-6 py-10 space-y-16">
+
+            <section id="story" class="scroll-mt-20">
+                <div class="text-center mb-8">
+                    <h2 class="font-serif text-3xl md:text-4xl text-brand-dark mb-2">Our Story</h2>
+                    <div class="h-1 w-16 bg-brand-accent mx-auto"></div>
+                </div>
+                <div class="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-stone-300 before:to-transparent">
+                    
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-brand-light text-brand-dark shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                            <span class="text-xs font-bold">2020</span>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-stone-50 p-4 rounded-lg shadow-sm border border-stone-100">
+                            <h3 class="font-serif font-bold text-lg text-brand-dark">We Met</h3>
+                            <p class="text-sm text-stone-600 mt-1">Our paths crossed in the most unexpected way, beginning a beautiful journey.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-brand-light text-brand-dark shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                            <span class="text-xs font-bold">2023</span>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-stone-50 p-4 rounded-lg shadow-sm border border-stone-100">
+                            <h3 class="font-serif font-bold text-lg text-brand-dark">The Proposal</h3>
+                            <p class="text-sm text-stone-600 mt-1">A perfect day filled with love and a question that changed everything.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="program" class="scroll-mt-20">
+                <div class="text-center mb-8">
+                    <h2 class="font-serif text-3xl md:text-4xl text-brand-dark mb-2">Program of the Day</h2>
+                    <div class="h-1 w-16 bg-brand-accent mx-auto"></div>
+                </div>
+                
+                <div class="bg-brand-dark text-white rounded-2xl p-6 md:p-8 shadow-lg">
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <div class="font-bold w-16 shrink-0 text-brand-accent">15:30</div>
+                            <div>
+                                <h4 class="font-serif text-lg">Guest Arrival</h4>
+                                <p class="text-sm text-stone-300">Welcome drinks and seating.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="font-bold w-16 shrink-0 text-brand-accent">16:00</div>
+                            <div>
+                                <h4 class="font-serif text-lg">Wedding Ceremony</h4>
+                                <p class="text-sm text-stone-300">Exchange of vows.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="font-bold w-16 shrink-0 text-brand-accent">18:00</div>
+                            <div>
+                                <h4 class="font-serif text-lg">Dinner & Reception</h4>
+                                <p class="text-sm text-stone-300">Let's celebrate and dance the night away.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="venue" class="scroll-mt-20 text-center">
+                <h2 class="font-serif text-3xl md:text-4xl text-brand-dark mb-2">Venue</h2>
+                <div class="h-1 w-16 bg-brand-accent mx-auto mb-6"></div>
+                
+                <div class="bg-stone-100 p-6 rounded-xl border border-stone-200">
+                    <h3 class="font-bold text-lg text-brand-dark">Grand Ballroom</h3>
+                    <p class="text-stone-600 mt-1 mb-4">123 Celebration Avenue,<br>Colombo 07, Sri Lanka</p>
+                    <p class="text-sm uppercase tracking-wide text-stone-500 mb-6">Dress Code: Formal / Evening Wear</p>
+                    
+                    <a href="#" class="inline-block bg-brand-dark text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-emerald-900 transition shadow-md">
+                        Open in Google Maps
+                    </a>
+                </div>
+            </section>
+
+            <section id="rsvp" class="scroll-mt-20 pb-10">
+                <div class="bg-white p-6 md:p-10 rounded-2xl shadow-[0_0_40px_rgba(0,0,0,0.05)] border border-stone-100">
+                    <div class="text-center mb-8">
+                        <h2 class="font-serif text-3xl md:text-4xl text-brand-dark mb-2">RSVP</h2>
+                        <p class="text-sm text-stone-500">Please respond by October 27, 2026</p>
+                    </div>
+
+                    <form id="rsvpForm" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-semibold text-stone-700 mb-1">Full Name</label>
+                            <input type="text" id="guestName" required class="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand-dark focus:border-brand-dark outline-none transition">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-stone-700 mb-1">Email Address</label>
+                            <input type="email" id="guestEmail" required class="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand-dark focus:border-brand-dark outline-none transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-stone-700 mb-2">Will you be attending?</label>
+                            <div class="flex space-x-4">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="attendance" value="Accepts with Joy" required class="text-brand-dark focus:ring-brand-dark w-4 h-4">
+                                    <span>Accepts with Joy</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="radio" name="attendance" value="Declines with Regret" class="text-brand-dark focus:ring-brand-dark w-4 h-4">
+                                    <span>Declines with Regret</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-stone-700 mb-1">Dietary Restrictions</label>
+                            <div class="grid grid-cols-2 gap-2 text-sm">
+                                <label class="flex items-center space-x-2"><input type="checkbox" name="diet" value="Vegetarian" class="rounded text-brand-dark focus:ring-brand-dark"> <span>Vegetarian</span></label>
+                                <label class="flex items-center space-x-2"><input type="checkbox" name="diet" value="Vegan" class="rounded text-brand-dark focus:ring-brand-dark"> <span>Vegan</span></label>
+                                <label class="flex items-center space-x-2"><input type="checkbox" name="diet" value="Gluten-Free" class="rounded text-brand-dark focus:ring-brand-dark"> <span>Gluten-Free</span></label>
+                                <label class="flex items-center space-x-2"><input type="checkbox" name="diet" value="Lactose-Free" class="rounded text-brand-dark focus:ring-brand-dark"> <span>Lactose-Free</span></label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-stone-700 mb-1">Message for the Couple</label>
+                            <textarea id="guestMessage" rows="3" class="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-brand-dark focus:border-brand-dark outline-none transition resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-brand-dark text-white font-bold py-3 rounded-lg shadow-md hover:bg-emerald-900 transition mt-4">
+                            Send RSVP
+                        </button>
+                    </form>
+
+                    <div id="successMessage" class="hidden mt-6 bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-lg text-center">
+                        <p class="font-semibold">Thank you for your response!</p>
+                        <p class="text-sm">Your RSVP has been saved locally.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        
+        <footer class="bg-brand-dark text-center py-6 text-stone-400 text-sm rounded-t-xl">
+            <p>&copy; 2026 Bathiya & Harshi. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Dexie local database
+        const db = new Dexie("WeddingRSVPDB");
+        
+        // Define database schema
+        db.version(1).stores({
+            responses: '++id, name, email, attendance, dietary, message, timestamp'
+        });
+
+        // Handle Form Submission
+        document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Gather data
+            const name = document.getElementById('guestName').value;
+            const email = document.getElementById('guestEmail').value;
+            const attendance = document.querySelector('input[name="attendance"]:checked').value;
+            const message = document.getElementById('guestMessage').value;
+            
+            // Gather checkboxes
+            const dietCheckboxes = document.querySelectorAll('input[name="diet"]:checked');
+            const dietary = Array.from(dietCheckboxes).map(cb => cb.value).join(', ') || 'None';
+
+            try {
+                // Save to IndexedDB via Dexie
+                await db.responses.add({
+                    name: name,
+                    email: email,
+                    attendance: attendance,
+                    dietary: dietary,
+                    message: message,
+                    timestamp: new Date().toISOString()
+                });
+
+                // Show Success Message and hide form
+                document.getElementById('rsvpForm').reset();
+                document.getElementById('rsvpForm').classList.add('hidden');
+                document.getElementById('successMessage').classList.remove('hidden');
+
+                // Log to console for developer verification
+                console.log("RSVP successfully saved to local Dexie database.");
+                const allResponses = await db.responses.toArray();
+                console.table(allResponses);
+
+            } catch (error) {
+                console.error("Error saving RSVP:", error);
+                alert("There was an error saving your RSVP. Please try again.");
+            }
+        });
+    </script>
+</body>
+</html>
