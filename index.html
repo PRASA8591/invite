@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bathiya & Harshi - A Sri Lankan Celebration</title>
+    <title>Bathiya & Harshi - Engagement</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -21,14 +21,26 @@
                     },
                     colors: {
                         sl: {
-                            maroon: '#6A1024', // Traditional Kandyan maroon
-                            gold: '#C4A45C',   // Antique gold
-                            cream: '#FDFBF7',  // Soft paper
-                            green: '#2C4C3B'   // Natural leaf green
+                            ruby: '#7A1032',   // Deep rich red
+                            gold: '#D4AF37',   // Metallic gold
+                            emerald: '#0B4A2D', // Deep emerald green
+                            cream: '#FCFAF5',  // Warm paper
                         }
                     },
                     animation: {
-                        'spin-slow': 'spin 15s linear infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: 1, filter: 'drop-shadow(0 0 10px rgba(212, 175, 55, 0.8))' },
+                            '50%': { opacity: .5, filter: 'drop-shadow(0 0 2px rgba(212, 175, 55, 0.3))' },
+                        }
                     }
                 }
             }
@@ -37,287 +49,265 @@
     <style>
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #FDFBF7; }
-        ::-webkit-scrollbar-thumb { background: #C4A45C; border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: #FCFAF5; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
         
-        /* Traditional Liyavel Motif Background */
         body {
-            background-color: #FDFBF7;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10 Q 30 30 50 10 T 90 10' fill='none' stroke='%23C4A45C' stroke-opacity='0.1' stroke-width='2'/%3E%3C/svg%3E");
+            background-color: #FCFAF5;
+            background-image: radial-gradient(#D4AF37 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
+            background-attachment: fixed;
         }
 
-        /* Scroll Animation Classes */
+        /* Glassmorphism utilities */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Scroll Reveal Animations */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
+            transform: translateY(40px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
         .reveal.active {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
-        /* Envelope Splash Screen */
-        #envelope-screen {
-            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease;
+        /* Splash Screen & Box */
+        #splash-screen {
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease;
         }
-        .open-envelope {
-            transform: translateY(-100vh);
+        .open-splash {
+            transform: scale(1.5) translateY(-100vh);
             opacity: 0;
             pointer-events: none;
         }
 
-        /* Wax Seal Pulse */
-        @keyframes pulse-ring {
-            0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(196, 164, 92, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(196, 164, 92, 0); }
-            100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(196, 164, 92, 0); }
+        /* Dynamic Particles */
+        .particle {
+            position: absolute;
+            background: #D4AF37;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: floatUp 4s ease-in infinite;
         }
-        .wax-seal { animation: pulse-ring 2s infinite; }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-100px) scale(0); opacity: 0; }
+        }
     </style>
 </head>
 <body class="text-stone-800 font-sans antialiased overflow-hidden" id="body">
 
-    <div id="envelope-screen" class="fixed inset-0 z-[100] bg-sl-green flex flex-col items-center justify-center cursor-pointer">
-        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/handmade-paper.png')]"></div>
-        <div class="relative z-10 text-center">
-            <h2 class="font-serif text-sl-gold text-2xl mb-8 tracking-widest uppercase">You are invited</h2>
-            <button id="open-btn" class="wax-seal w-24 h-24 bg-sl-maroon rounded-full border-4 border-sl-gold flex items-center justify-center shadow-[0_10px_20px_rgba(0,0,0,0.3)] transition transform hover:scale-110">
-                <span class="font-serif text-sl-gold text-4xl font-bold italic">B&H</span>
+    <div id="splash-screen" class="fixed inset-0 z-[100] bg-sl-emerald flex flex-col items-center justify-center cursor-pointer overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.15)_0,transparent_70%)]"></div>
+        <div class="relative z-10 text-center flex flex-col items-center">
+            <h2 class="font-serif text-sl-gold text-xl mb-4 tracking-[0.3em] uppercase">You are invited to</h2>
+            <h1 class="font-serif text-white text-4xl mb-10 tracking-wider">Our Engagement</h1>
+            
+            <button id="open-btn" class="relative group outline-none">
+                <div class="absolute -inset-4 bg-sl-gold/30 rounded-full blur-xl group-hover:bg-sl-gold/50 transition duration-500"></div>
+                <div class="w-28 h-28 bg-gradient-to-br from-sl-ruby to-[#4a0b19] rounded-full border-2 border-sl-gold flex items-center justify-center shadow-[0_0_30px_rgba(212,175,55,0.4)] relative z-10 transition-transform duration-500 group-hover:scale-110">
+                    <svg class="w-12 h-12 text-sl-gold animate-pulse-glow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2a4 4 0 014 4v1H8V6a4 4 0 014-4zM5 11a7 7 0 1014 0 7 7 0 00-14 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9l.01 0"></path></svg>
+                </div>
             </button>
-            <p class="text-sl-gold/80 mt-6 text-sm animate-bounce">Tap to open</p>
+            <p class="text-sl-gold mt-8 text-sm tracking-widest animate-pulse">TAP TO OPEN</p>
         </div>
     </div>
 
-    <div class="max-w-md mx-auto sm:max-w-2xl lg:max-w-3xl bg-white min-h-screen shadow-2xl relative">
+    <div class="max-w-md mx-auto sm:max-w-2xl lg:max-w-3xl bg-white/50 min-h-screen shadow-2xl relative" id="main-container">
+        <div id="particles-js" class="absolute inset-0 overflow-hidden pointer-events-none z-0"></div>
 
-        <header class="bg-sl-maroon text-sl-cream text-center py-24 px-6 relative rounded-b-[40px] shadow-2xl overflow-hidden">
-            <div class="absolute inset-0 opacity-10 flex items-center justify-center">
-                <svg viewBox="0 0 200 200" class="w-96 h-96 animate-spin-slow">
-                    <path fill="#C4A45C" d="M100 0 L110 40 L150 50 L110 60 L100 100 L90 60 L50 50 L90 40 Z" transform="scale(2) translate(-25, -25)"/>
+        <header class="bg-gradient-to-b from-sl-ruby via-[#600b25] to-sl-ruby text-white text-center pt-24 pb-16 px-6 relative rounded-b-[50px] shadow-2xl z-10">
+            <div class="absolute inset-0 opacity-10 flex items-center justify-center overflow-hidden rounded-b-[50px]">
+                <svg viewBox="0 0 200 200" class="w-[500px] h-[500px] animate-spin-slow">
+                    <path fill="#D4AF37" d="M100 0 L110 40 L150 50 L110 60 L100 100 L90 60 L50 50 L90 40 Z" transform="scale(2) translate(-25, -25)"/>
                 </svg>
             </div>
             
             <div class="relative z-10 reveal active">
-                <p class="text-xs uppercase tracking-[0.3em] mb-6 text-sl-gold font-semibold">With the blessings of our parents</p>
-                <h1 class="font-serif text-5xl md:text-7xl font-bold leading-tight mb-6 drop-shadow-lg">
-                    Bathiya<br>
-                    <span class="text-4xl md:text-6xl text-sl-gold italic font-normal my-2 block">&amp;</span>
-                    Harshi
+                <span class="inline-block py-1 px-4 border border-sl-gold/50 rounded-full text-xs uppercase tracking-[0.3em] mb-8 text-sl-gold font-semibold glass-card">We are engaged!</span>
+                
+                <h1 class="font-serif text-6xl md:text-8xl font-black leading-none mb-6 drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)]">
+                    <span class="block bg-clip-text text-transparent bg-gradient-to-b from-white to-stone-300">Bathiya</span>
+                    <span class="text-4xl md:text-6xl text-sl-gold italic font-normal my-2 block">&</span>
+                    <span class="block bg-clip-text text-transparent bg-gradient-to-b from-white to-stone-300">Harshi</span>
                 </h1>
-                <div class="w-24 h-px bg-sl-gold mx-auto my-6"></div>
-                <p class="text-lg md:text-xl font-light tracking-widest">Thursday, November 27, 2026</p>
+
+                <div class="flex justify-center -space-x-6 my-8 animate-float">
+                    <img class="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-sl-ruby object-cover shadow-xl z-20" src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=200&h=200&fit=crop" alt="Rings">
+                    <img class="w-24 h-24 md:w-28 md:h-28 rounded-full border-4 border-sl-gold object-cover shadow-2xl z-30 transform -translate-y-2" src="https://images.unsplash.com/photo-1606216446543-98db741400d7?w=200&h=200&fit=crop" alt="Couple">
+                    <img class="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-sl-ruby object-cover shadow-xl z-20" src="https://images.unsplash.com/photo-1543884848-18e4bc3eb7da?w=200&h=200&fit=crop" alt="Hands">
+                </div>
+
+                <div class="w-32 h-px bg-gradient-to-r from-transparent via-sl-gold to-transparent mx-auto my-6"></div>
+                <p class="text-lg md:text-2xl font-light tracking-widest text-stone-200">June 20, 2026</p>
             </div>
         </header>
 
-        <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm">
-            <ul class="flex justify-center space-x-8 py-4 text-xs font-semibold text-sl-maroon uppercase tracking-[0.2em] overflow-x-auto px-4">
-                <li><a href="#story" class="hover:text-sl-gold transition duration-300">Story</a></li>
-                <li><a href="#program" class="hover:text-sl-gold transition duration-300">Program</a></li>
-                <li><a href="#venue" class="hover:text-sl-gold transition duration-300">Venue</a></li>
-                <li><a href="#rsvp" class="hover:text-sl-gold transition duration-300">RSVP</a></li>
-            </ul>
-        </nav>
+        <main class="px-6 py-12 space-y-20 relative z-10">
 
-        <main class="px-6 py-12 space-y-20">
-
-            <section id="story" class="scroll-mt-24 reveal">
-                <div class="text-center mb-10">
-                    <h2 class="font-serif text-3xl md:text-4xl text-sl-maroon mb-3">Our Journey</h2>
-                    <svg class="w-16 h-4 mx-auto" viewBox="0 0 100 20" fill="none" stroke="#C4A45C" stroke-width="2"><path d="M0 10 Q 25 0 50 10 T 100 10"/></svg>
-                </div>
-                
-                <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-sl-gold/20 before:via-sl-gold before:to-sl-gold/20">
-                    
-                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-sl-gold bg-white text-sl-maroon shadow-lg shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform hover:scale-110">
-                            <span class="text-xs font-bold">2021</span>
-                        </div>
-                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] bg-white p-5 rounded-xl shadow-md border border-stone-100 hover:shadow-lg transition-shadow">
-                            <h3 class="font-serif font-bold text-xl text-sl-maroon">The Beginning</h3>
-                            <p class="text-sm text-stone-600 mt-2 leading-relaxed">It started with a simple hello. Little did we know it was the start of a lifetime of happiness.</p>
-                        </div>
+            <section id="details" class="scroll-mt-24 reveal">
+                <div class="glass-card rounded-[2rem] p-8 md:p-12 shadow-[0_20px_40px_rgba(0,0,0,0.05)] border-t-4 border-sl-gold transform transition-all hover:-translate-y-2 duration-500">
+                    <div class="text-center mb-8">
+                        <svg class="w-12 h-12 mx-auto text-sl-ruby mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                        <h2 class="font-serif text-3xl md:text-4xl text-sl-ruby mb-2">The Celebration</h2>
+                        <p class="text-sm text-stone-500 uppercase tracking-widest font-semibold">Join us to celebrate our new chapter</p>
                     </div>
 
-                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-sl-gold bg-white text-sl-maroon shadow-lg shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform hover:scale-110">
-                            <span class="text-xs font-bold">2024</span>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                        <div class="bg-white p-6 rounded-2xl border border-stone-100 flex items-center shadow-sm">
+                            <div class="w-14 h-14 bg-sl-cream rounded-full flex items-center justify-center text-sl-gold shrink-0 border border-sl-gold/30">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="font-serif font-bold text-lg text-sl-ruby">Morning Event</h3>
+                                <p class="text-sm text-stone-600">Arrival at 10:00 AM<br>Ring Exchange at 11:30 AM</p>
+                            </div>
                         </div>
-                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] bg-white p-5 rounded-xl shadow-md border border-stone-100 hover:shadow-lg transition-shadow">
-                            <h3 class="font-serif font-bold text-xl text-sl-maroon">The Proposal</h3>
-                            <p class="text-sm text-stone-600 mt-2 leading-relaxed">Surrounded by nature, a promise was made to share all our tomorrows together.</p>
+
+                        <div class="bg-white p-6 rounded-2xl border border-stone-100 flex items-center shadow-sm">
+                            <div class="w-14 h-14 bg-sl-cream rounded-full flex items-center justify-center text-sl-gold shrink-0 border border-sl-gold/30">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="font-serif font-bold text-lg text-sl-ruby">Dress Code</h3>
+                                <p class="text-sm text-stone-600">Smart Casual / Traditional<br>Colors: Gold & Emerald</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-
-            <section id="program" class="scroll-mt-24 reveal">
-                <div class="text-center mb-10">
-                    <h2 class="font-serif text-3xl md:text-4xl text-sl-maroon mb-3">Auspicious Times</h2>
-                    <svg class="w-16 h-4 mx-auto" viewBox="0 0 100 20" fill="none" stroke="#C4A45C" stroke-width="2"><path d="M0 10 Q 25 0 50 10 T 100 10"/></svg>
-                </div>
-                
-                <div class="bg-gradient-to-br from-sl-maroon to-[#4a0b19] text-white rounded-3xl p-8 shadow-xl relative overflow-hidden">
-                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-sl-gold/10 rounded-full blur-2xl"></div>
-                    
-                    <ul class="space-y-6 relative z-10">
-                        <li class="flex items-start group">
-                            <div class="font-serif font-bold text-xl w-24 shrink-0 text-sl-gold group-hover:translate-x-1 transition-transform">08:30 AM</div>
-                            <div class="border-l border-sl-gold/30 pl-4 pb-2">
-                                <h4 class="font-semibold text-lg tracking-wide">Guest Arrival</h4>
-                                <p class="text-sm text-stone-300 mt-1">Welcome drinks and traditional sweetmeats.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start group">
-                            <div class="font-serif font-bold text-xl w-24 shrink-0 text-sl-gold group-hover:translate-x-1 transition-transform">09:15 AM</div>
-                            <div class="border-l border-sl-gold/30 pl-4 pb-2">
-                                <h4 class="font-semibold text-lg tracking-wide">Poruwa Ceremony</h4>
-                                <p class="text-sm text-stone-300 mt-1">Traditional Sri Lankan marriage rituals on the Poruwa.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start group">
-                            <div class="font-serif font-bold text-xl w-24 shrink-0 text-sl-gold group-hover:translate-x-1 transition-transform">10:30 AM</div>
-                            <div class="border-l border-sl-gold/30 pl-4 pb-2">
-                                <h4 class="font-semibold text-lg tracking-wide">Lighting of the Oil Lamp</h4>
-                                <p class="text-sm text-stone-300 mt-1">Accompanied by Jayamangala Gatha.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start group">
-                            <div class="font-serif font-bold text-xl w-24 shrink-0 text-sl-gold group-hover:translate-x-1 transition-transform">12:30 PM</div>
-                            <div class="border-l border-sl-gold/30 pl-4">
-                                <h4 class="font-semibold text-lg tracking-wide">Wedding Feast</h4>
-                                <p class="text-sm text-stone-300 mt-1">Lunch, celebrations, and music.</p>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
             </section>
 
             <section id="venue" class="scroll-mt-24 reveal text-center">
-                <h2 class="font-serif text-3xl md:text-4xl text-sl-maroon mb-3">The Venue</h2>
-                <svg class="w-16 h-4 mx-auto mb-8" viewBox="0 0 100 20" fill="none" stroke="#C4A45C" stroke-width="2"><path d="M0 10 Q 25 0 50 10 T 100 10"/></svg>
+                <h2 class="font-serif text-3xl md:text-4xl text-sl-ruby mb-2">The Location</h2>
+                <div class="w-16 h-1 bg-sl-gold mx-auto mb-8 rounded-full"></div>
                 
-                <div class="bg-white p-2 rounded-2xl shadow-xl border border-stone-100 overflow-hidden group">
-                    <div class="w-full h-64 rounded-xl overflow-hidden relative">
+                <div class="glass-card p-2 rounded-[2rem] shadow-xl overflow-hidden group">
+                    <div class="w-full h-72 rounded-[1.5rem] overflow-hidden relative">
                         <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126743.63162586745!2d79.85620549999999!3d6.9218335!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae253d10f7a7003%3A0x320b2e4d32d3838d!2sColombo%2C%20Sri%20Lanka!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63381.18525049964!2d79.9610263!3d6.845943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae250119e78d91f%3A0xc3fec83b5cbba361!2sHomagama!5e0!3m2!1sen!2slk!4v1700000000000!5m2!1sen!2slk" 
                             width="100%" 
                             height="100%" 
                             style="border:0;" 
                             allowfullscreen="" 
                             loading="lazy" 
                             referrerpolicy="no-referrer-when-downgrade"
-                            class="grayscale group-hover:grayscale-0 transition duration-500">
+                            class="grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700">
                         </iframe>
+                        <div class="absolute inset-0 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.2)] rounded-[1.5rem]"></div>
                     </div>
                     
-                    <div class="p-6">
-                        <h3 class="font-serif font-bold text-2xl text-sl-maroon">Grand Horizon Hotel</h3>
-                        <p class="text-stone-600 mt-2 mb-4 text-sm">Colombo, Western Province, Sri Lanka</p>
-                        <div class="flex justify-center gap-4 text-xs font-semibold uppercase tracking-wider text-sl-gold mb-6">
-                            <span>Formal</span>
-                            <span>•</span>
-                            <span>Traditional Attire</span>
-                        </div>
+                    <div class="p-8 bg-white/50">
+                        <h3 class="font-serif font-bold text-2xl text-sl-emerald">Green Valley Banquet Hall</h3>
+                        <p class="text-stone-700 mt-2 text-sm font-medium">124 High Level Road, Homagama,<br>Western Province, Sri Lanka</p>
                         
-                        <a href="https://maps.google.com" target="_blank" class="inline-flex items-center justify-center bg-sl-maroon text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-[#4a0b19] transition-colors shadow-lg transform hover:-translate-y-1">
+                        <a href="https://maps.google.com/?q=Homagama,+Sri+Lanka" target="_blank" class="inline-flex items-center justify-center mt-6 bg-sl-emerald text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-[#083822] transition-colors shadow-[0_10px_20px_rgba(11,74,45,0.3)] transform hover:-translate-y-1">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            Get Directions
+                            Open in Maps
                         </a>
                     </div>
                 </div>
             </section>
 
-            <section id="rsvp" class="scroll-mt-24 pb-12 reveal">
-                <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl border-t-4 border-sl-gold relative">
-                    
-                    <div class="text-center mb-10">
-                        <h2 class="font-serif text-3xl md:text-4xl text-sl-maroon mb-2">RSVP</h2>
-                        <p class="text-sm text-stone-500 font-medium">Please grace us with your response by October 27, 2026</p>
+            <section id="guestbook" class="scroll-mt-24 pb-12 reveal">
+                <div class="bg-gradient-to-br from-sl-ruby to-[#50091d] p-8 md:p-12 rounded-[2rem] shadow-2xl relative overflow-hidden">
+                    <div class="absolute -right-16 -top-16 w-64 h-64 border-[30px] border-sl-gold/10 rounded-full"></div>
+                    <div class="absolute -left-16 -bottom-16 w-48 h-48 border-[20px] border-sl-gold/10 rounded-full"></div>
+
+                    <div class="text-center mb-8 relative z-10">
+                        <h2 class="font-serif text-3xl md:text-4xl text-sl-gold mb-2">Digital Guestbook</h2>
+                        <p class="text-sm text-stone-300 font-medium">Leave a little sparkle and a wish for the couple.</p>
                     </div>
 
-                    <form id="rsvpForm" class="space-y-6">
-                        <div class="group">
-                            <label class="block text-xs uppercase tracking-widest font-semibold text-stone-500 mb-2">Full Name</label>
-                            <input type="text" id="guestName" required class="w-full px-4 py-3 border-b-2 border-stone-200 bg-stone-50 focus:bg-white focus:border-sl-maroon outline-none transition-all duration-300">
+                    <form id="wishForm" class="space-y-5 relative z-10">
+                        <div>
+                            <input type="text" id="guestName" placeholder="Your Name" required class="w-full px-5 py-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-stone-400 focus:bg-white/20 focus:border-sl-gold outline-none transition-all duration-300 backdrop-blur-sm">
                         </div>
                         
-                        <div class="group">
-                            <label class="block text-xs uppercase tracking-widest font-semibold text-stone-500 mb-2">Email Address</label>
-                            <input type="email" id="guestEmail" required class="w-full px-4 py-3 border-b-2 border-stone-200 bg-stone-50 focus:bg-white focus:border-sl-maroon outline-none transition-all duration-300">
-                        </div>
-
                         <div>
-                            <label class="block text-xs uppercase tracking-widest font-semibold text-stone-500 mb-3">Will you be attending?</label>
-                            <div class="flex flex-col sm:flex-row gap-4">
-                                <label class="flex-1 flex items-center p-4 border border-stone-200 rounded-xl cursor-pointer hover:border-sl-gold transition-colors">
-                                    <input type="radio" name="attendance" value="Accepts with Joy" required class="text-sl-maroon focus:ring-sl-maroon w-5 h-5 accent-sl-maroon">
-                                    <span class="ml-3 font-medium text-stone-700">Accepts with Joy</span>
-                                </label>
-                                <label class="flex-1 flex items-center p-4 border border-stone-200 rounded-xl cursor-pointer hover:border-sl-gold transition-colors">
-                                    <input type="radio" name="attendance" value="Declines with Regret" class="text-sl-maroon focus:ring-sl-maroon w-5 h-5 accent-sl-maroon">
-                                    <span class="ml-3 font-medium text-stone-700">Declines with Regret</span>
-                                </label>
-                            </div>
+                            <textarea id="guestWish" rows="3" required placeholder="Write your engagement wishes here..." class="w-full px-5 py-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-stone-400 focus:bg-white/20 focus:border-sl-gold outline-none transition-all duration-300 backdrop-blur-sm resize-none"></textarea>
                         </div>
 
-                        <div>
-                            <label class="block text-xs uppercase tracking-widest font-semibold text-stone-500 mb-3">Dietary Requirements</label>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                                <label class="flex items-center space-x-2 bg-stone-50 p-2 rounded-lg cursor-pointer"><input type="checkbox" name="diet" value="Vegetarian" class="rounded text-sl-maroon accent-sl-maroon"> <span>Vegetarian</span></label>
-                                <label class="flex items-center space-x-2 bg-stone-50 p-2 rounded-lg cursor-pointer"><input type="checkbox" name="diet" value="Vegan" class="rounded text-sl-maroon accent-sl-maroon"> <span>Vegan</span></label>
-                                <label class="flex items-center space-x-2 bg-stone-50 p-2 rounded-lg cursor-pointer"><input type="checkbox" name="diet" value="Halal" class="rounded text-sl-maroon accent-sl-maroon"> <span>Halal</span></label>
-                                <label class="flex items-center space-x-2 bg-stone-50 p-2 rounded-lg cursor-pointer"><input type="checkbox" name="diet" value="Gluten-Free" class="rounded text-sl-maroon accent-sl-maroon"> <span>Gluten-Free</span></label>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs uppercase tracking-widest font-semibold text-stone-500 mb-2">Blessings for the Couple</label>
-                            <textarea id="guestMessage" rows="3" class="w-full px-4 py-3 border-b-2 border-stone-200 bg-stone-50 focus:bg-white focus:border-sl-maroon outline-none transition-all duration-300 resize-none placeholder-stone-400" placeholder="Write a brief message..."></textarea>
-                        </div>
-
-                        <button type="submit" class="w-full bg-sl-maroon text-sl-gold uppercase tracking-widest font-bold py-4 rounded-xl shadow-[0_8px_15px_rgba(106,16,36,0.3)] hover:bg-[#4a0b19] hover:shadow-[0_15px_20px_rgba(106,16,36,0.4)] transition-all duration-300 transform hover:-translate-y-1 mt-6">
-                            Send RSVP
+                        <button type="submit" class="w-full bg-sl-gold text-sl-ruby uppercase tracking-[0.2em] font-bold py-4 rounded-xl shadow-[0_8px_15px_rgba(0,0,0,0.3)] hover:bg-yellow-400 transition-all duration-300 transform hover:-translate-y-1">
+                            Send Wish
                         </button>
                     </form>
 
-                    <div id="successMessage" class="hidden mt-8 bg-green-50 border border-green-200 text-green-800 p-8 rounded-2xl text-center transform transition-all">
-                        <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <h3 class="text-2xl font-serif font-bold mb-2">Thank You!</h3>
-                        <p class="text-sm">Your presence means the world to us. Your RSVP has been saved.</p>
+                    <div id="wishSuccess" class="hidden mt-8 bg-white/10 backdrop-blur-md border border-sl-gold/50 text-sl-gold p-6 rounded-2xl text-center transform transition-all relative z-10">
+                        <svg class="w-12 h-12 mx-auto mb-2 text-sl-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <h3 class="text-xl font-serif font-bold">Wish Received!</h3>
+                        <p class="text-xs text-stone-300 mt-1">Thank you for sharing your love.</p>
                     </div>
                 </div>
+                
+                <div id="wishesDisplay" class="mt-8 space-y-4 max-h-64 overflow-y-auto pr-2">
+                    </div>
             </section>
 
         </main>
         
-        <footer class="bg-sl-green text-center py-8 text-sl-cream/70 text-sm rounded-t-3xl relative overflow-hidden">
-            <div class="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/handmade-paper.png')]"></div>
-            <p class="relative z-10">&copy; 2026 Bathiya & Harshi. Designed with ❤️ in Sri Lanka.</p>
+        <footer class="bg-transparent text-center py-8 text-stone-500 text-xs tracking-widest uppercase relative z-10">
+            <p>Bathiya & Harshi • 2026</p>
         </footer>
     </div>
 
     <script>
-        // 1. Envelope Opening Animation Logic
-        const envelopeScreen = document.getElementById('envelope-screen');
+        // 1. Splash Screen & Particle Logic
+        const splashScreen = document.getElementById('splash-screen');
         const openBtn = document.getElementById('open-btn');
         const body = document.getElementById('body');
+        const particlesContainer = document.getElementById('particles-js');
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Randomize size, position, and animation duration
+            const size = Math.random() * 6 + 2;
+            const left = Math.random() * 100;
+            const duration = Math.random() * 3 + 2;
+            const delay = Math.random() * 2;
+
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${left}%`;
+            particle.style.bottom = `-10px`;
+            particle.style.animationDuration = `${duration}s`;
+            particle.style.animationDelay = `${delay}s`;
+
+            particlesContainer.appendChild(particle);
+
+            // Remove particle after animation ends
+            setTimeout(() => {
+                particle.remove();
+            }, (duration + delay) * 1000);
+        }
 
         openBtn.addEventListener('click', () => {
-            envelopeScreen.classList.add('open-envelope');
-            body.classList.remove('overflow-hidden'); // Allow scrolling
+            splashScreen.classList.add('open-splash');
+            body.classList.remove('overflow-hidden');
             
-            // Trigger scroll animations immediately for visible elements
+            // Start particle effects
+            setInterval(createParticle, 300);
+            
             setTimeout(checkReveal, 500);
         });
 
-        // 2. Scroll Reveal Animations (Intersection Observer Alternative)
+        // 2. Scroll Reveal Animations
         function checkReveal() {
             var reveals = document.querySelectorAll('.reveal');
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 100;
+                var elementVisible = 50;
                 if (elementTop < windowHeight - elementVisible) {
                     reveals[i].classList.add('active');
                 }
@@ -325,50 +315,65 @@
         }
         window.addEventListener('scroll', checkReveal);
 
-        // 3. Dexie.js Local Database Logic
-        const db = new Dexie("SriLankanWeddingDB");
+        // 3. Dexie.js Local Database Logic (Digital Guestbook)
+        const db = new Dexie("EngagementGuestbookDB");
         db.version(1).stores({
-            responses: '++id, name, email, attendance, dietary, message, timestamp'
+            wishes: '++id, name, wish, timestamp'
         });
 
-        document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
+        const wishesDisplay = document.getElementById('wishesDisplay');
+
+        // Load existing wishes
+        async function loadWishes() {
+            const allWishes = await db.wishes.orderBy('timestamp').reverse().toArray();
+            wishesDisplay.innerHTML = '';
+            allWishes.forEach(item => {
+                const wishCard = document.createElement('div');
+                wishCard.className = 'bg-white p-4 rounded-xl shadow-sm border border-stone-100 animate-float" style="animation-duration: 8s;"';
+                wishCard.innerHTML = `
+                    <p class="text-sm font-serif italic text-stone-600">"${item.wish}"</p>
+                    <p class="text-xs text-sl-ruby font-bold uppercase tracking-wider mt-2">- ${item.name}</p>
+                `;
+                wishesDisplay.appendChild(wishCard);
+            });
+        }
+
+        // Initialize display
+        loadWishes();
+
+        document.getElementById('wishForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = 'Sending...';
             submitBtn.disabled = true;
 
             const name = document.getElementById('guestName').value;
-            const email = document.getElementById('guestEmail').value;
-            const attendance = document.querySelector('input[name="attendance"]:checked').value;
-            const message = document.getElementById('guestMessage').value;
-            
-            const dietCheckboxes = document.querySelectorAll('input[name="diet"]:checked');
-            const dietary = Array.from(dietCheckboxes).map(cb => cb.value).join(', ') || 'None';
+            const wish = document.getElementById('guestWish').value;
 
             try {
-                // Simulate network delay for a premium feel
-                setTimeout(async () => {
-                    await db.responses.add({
-                        name, email, attendance, dietary, message,
-                        timestamp: new Date().toISOString()
-                    });
+                // Save locally
+                await db.wishes.add({
+                    name: name,
+                    wish: wish,
+                    timestamp: new Date().toISOString()
+                });
 
-                    document.getElementById('rsvpForm').reset();
-                    document.getElementById('rsvpForm').classList.add('hidden');
-                    
-                    const successMsg = document.getElementById('successMessage');
-                    successMsg.classList.remove('hidden');
-                    successMsg.classList.add('animate-pulse');
-                    setTimeout(() => successMsg.classList.remove('animate-pulse'), 1000);
-
-                    console.log("RSVP successfully saved locally.");
-                }, 800);
+                // UI Updates
+                this.reset();
+                this.classList.add('hidden');
+                
+                const successMsg = document.getElementById('wishSuccess');
+                successMsg.classList.remove('hidden');
+                
+                // Reload wishes to show new entry
+                loadWishes();
 
             } catch (error) {
-                console.error("Error saving RSVP:", error);
-                alert("There was an error saving your RSVP. Please try again.");
-                submitBtn.innerHTML = 'Send RSVP';
+                console.error("Error saving wish:", error);
+                alert("There was an error saving your wish.");
+                submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
         });
